@@ -61,8 +61,9 @@ xml.definitions 'xmlns' => 'http://schemas.xmlsoap.org/wsdl/',
   end
 
   xml.service :name => "service" do
+    soap_action_url = request.original_url.sub("/#{@name}/wsdl","/#{@name}/action")
     xml.port :name => "#{@name}_port", :binding => "tns:#{@name}_binding" do
-      xml.tag! "soap:address", :location => send("#{@name}_action_url")
+      xml.tag! "soap:address", :location => "#{soap_action_url}"
     end
   end
 end
